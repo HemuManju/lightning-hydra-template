@@ -342,3 +342,4 @@ To create a sweep over some hyperparameters run:
 # each with different combination of batch_size and learning rate
 python train.py --multirun datamodule.batch_size=32,64,128 model.lr=0.001,0.0005
 ```
+<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a> and <a target="_blank" href="https://github.com/hobogalaxy/lightning-hydra-template">pytorch lightning + hydra template</a>
