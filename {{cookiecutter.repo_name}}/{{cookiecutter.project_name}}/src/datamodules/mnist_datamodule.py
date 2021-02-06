@@ -10,7 +10,6 @@ class MNISTDataModule(LightningDataModule):
     To learn how to create datamodules visit:
         https://pytorch-lightning.readthedocs.io/en/latest/datamodules.html
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__()
 
@@ -36,16 +35,24 @@ class MNISTDataModule(LightningDataModule):
         trainset = MNIST(self.data_dir, train=True, transform=self.transforms)
         testset = MNIST(self.data_dir, train=False, transform=self.transforms)
         dataset = ConcatDataset(datasets=[trainset, testset])
-        self.data_train, self.data_val, self.data_test = random_split(dataset, self.train_val_test_split)
+        self.data_train, self.data_val, self.data_test = random_split(
+            dataset, self.train_val_test_split)
 
     def train_dataloader(self):
-        return DataLoader(dataset=self.data_train, batch_size=self.batch_size, num_workers=self.num_workers,
-                          pin_memory=self.pin_memory, shuffle=True)
+        return DataLoader(dataset=self.data_train,
+                          batch_size=self.batch_size,
+                          num_workers=self.num_workers,
+                          pin_memory=self.pin_memory,
+                          shuffle=True)
 
     def val_dataloader(self):
-        return DataLoader(dataset=self.data_val, batch_size=self.batch_size, num_workers=self.num_workers,
+        return DataLoader(dataset=self.data_val,
+                          batch_size=self.batch_size,
+                          num_workers=self.num_workers,
                           pin_memory=self.pin_memory)
 
     def test_dataloader(self):
-        return DataLoader(dataset=self.data_test, batch_size=self.batch_size, num_workers=self.num_workers,
+        return DataLoader(dataset=self.data_test,
+                          batch_size=self.batch_size,
+                          num_workers=self.num_workers,
                           pin_memory=self.pin_memory)

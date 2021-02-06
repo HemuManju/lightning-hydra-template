@@ -23,7 +23,8 @@ def train(config):
     model: LightningModule = hydra.utils.instantiate(config["model"])
 
     # Init PyTorch Lightning datamodule ⚡
-    datamodule: LightningDataModule = hydra.utils.instantiate(config["datamodule"])
+    datamodule: LightningDataModule = hydra.utils.instantiate(
+        config["datamodule"])
 
     # Init PyTorch Lightning callbacks ⚡
     callbacks: List[Callback] = [
@@ -35,11 +36,13 @@ def train(config):
     loggers: List[LightningLoggerBase] = [
         hydra.utils.instantiate(logger_conf)
         for logger_name, logger_conf in config["logger"].items()
-        if "_target_" in logger_conf   # ignore logger conf if there's no target
+        if "_target_" in logger_conf  # ignore logger conf if there's no target
     ] if "logger" in config else []
 
     # Init PyTorch Lightning trainer ⚡
-    trainer: Trainer = hydra.utils.instantiate(config["trainer"], callbacks=callbacks, logger=loggers)
+    trainer: Trainer = hydra.utils.instantiate(config["trainer"],
+                                               callbacks=callbacks,
+                                               logger=loggers)
 
     # Magic
     utils.extras(config, model, datamodule, callbacks, loggers, trainer)

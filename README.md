@@ -1,4 +1,4 @@
-## PyTorch Lightning + Hydra template 
+## PyTorch Lightning + Hydra cookiecutter template
 ### A clean and simple template to kickstart your deep learning project 🚀⚡🔥<br>
 - structures ML code the same so that work can easily be extended and replicated
 - allows for rapid experimentation by automating pipeline with config files
@@ -35,7 +35,7 @@ Click on <b>`Use this template`</b> button above to initialize new repository.<b
         - Schedule execution of many experiments from command line
         - Sweep over hyperparameters from command line
     - Convenient logging of run history, ckpts, etc. (see [#Logs](README.md#Logs))
-    - ~~Validating correctness of config with schemas~~ (TODO) 
+    - ~~Validating correctness of config with schemas~~ (TODO)
 - Optional Weights&Biases utilities for experiment tracking
     - Callbacks (see [wandb_callbacks.py](project/src/callbacks/wandb_callbacks.py))
         - Automatically store all code files and model checkpoints as artifacts in W&B cloud
@@ -50,7 +50,7 @@ Click on <b>`Use this template`</b> button above to initialize new repository.<b
 
 
 ## Project structure
-The directory structure of new project looks like this: 
+The directory structure of new project looks like this:
 ```
 ├── project
 │   ├── configs                 <- Hydra configuration files
@@ -61,8 +61,8 @@ The directory structure of new project looks like this:
 │   │   ├── logger                  <- Configurations of lightning loggers
 │   │   ├── seeds                   <- Configurations of seeds
 │   │   ├── experiment              <- Configurations of experiments
-│   │   │         
-│   │   └── config.yaml             <- Main project configuration file 
+│   │   │
+│   │   └── config.yaml             <- Main project configuration file
 │   │
 │   ├── data                    <- Project data
 │   │
@@ -78,7 +78,7 @@ The directory structure of new project looks like this:
 │   │   ├── models                  <- PyTorch Lightning models
 │   │   ├── transforms              <- Data transformations
 │   │   └── utils                   <- Utility scripts
-│   │       ├── inference_example.py    <- Example of inference with trained model 
+│   │       ├── inference_example.py    <- Example of inference with trained model
 │   │       └── template_utils.py       <- Some extra template utilities
 │   │
 │   └── train.py                <- Train model with chosen experiment configuration
@@ -108,7 +108,7 @@ The directory structure of new project looks like this:
 Main config contains default training configuration.<br>
 It determines how config is composed when simply executing command: `python train.py`
 ```yaml
-# to execute run with default training configuration simply run: 
+# to execute run with default training configuration simply run:
 # python train.py
 
 
@@ -189,13 +189,13 @@ More advanced experiment configuration:
 defaults:
     - override /trainer: null
     - override /model: null
-    - override /datamodule: null 
+    - override /datamodule: null
     - override /seeds: null
     - override /callbacks: default_callbacks.yaml
     - override /logger: null
 
 # we override default configurations with nulls to prevent them from loading at all
-# instead we define all modules and their paths directly in this config, 
+# instead we define all modules and their paths directly in this config,
 # so everything is stored in one place for more readibility
 
 seeds:
@@ -266,43 +266,27 @@ By default, logs have the following structure:
 <br><br>
 
 
-### DELETE EVERYTHING ABOVE FOR YOUR PROJECT  
- 
 ---
 
-<div align="center">    
- 
-# Your Project Name     
+## To start a new project, run:
+------------
+    cookiecutter https://github.com/ubhils/hils-cookiecutter-data-science.git
 
-[![Paper](http://img.shields.io/badge/paper-arxiv.1001.2234-B31B1B.svg)](https://www.nature.com/articles/nature14539)
-[![Conference](http://img.shields.io/badge/NeurIPS-2019-4b44ce.svg)](https://papers.nips.cc/book/advances-in-neural-information-processing-systems-31-2018)
-[![Conference](http://img.shields.io/badge/ICLR-2019-4b44ce.svg)](https://papers.nips.cc/book/advances-in-neural-information-processing-systems-31-2018)
-[![Conference](http://img.shields.io/badge/AnyConference-year-4b44ce.svg)](https://papers.nips.cc/book/advances-in-neural-information-processing-systems-31-2018)  
+### Install dependencies
 
-</div>
-
-## Description
-What it does
-
-## How to run
-First, install dependencies:
-```yaml
-# clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
-
-# optionally create conda environment
-conda update conda
-conda env create -f conda_env.yaml -n your_env_name
-conda activate your_env_name
-
-# install requirements
-pip install -r requirements.txt
+``` bash
+$ pip install cookiecutter
+$ pip install requirements.txt
+```
+``` bash
+$ conda config --add channels conda-forge
+$ conda install cookiecutter
+$ pip install requirements.txt
 ```
 
 Next, you can train model with default configuration without logging:
 ```yaml
-cd project
+cd project_name
 python train.py
 ```
 
@@ -354,19 +338,7 @@ python train.py --multirun '+experiment=glob(*)' trainer.max_epochs=10 logger=wa
 
 To create a sweep over some hyperparameters run:
 ```yaml
-# this will run 6 experiments one after the other, 
+# this will run 6 experiments one after the other,
 # each with different combination of batch_size and learning rate
 python train.py --multirun datamodule.batch_size=32,64,128 model.lr=0.001,0.0005
-```
-
-## Installing project as a package
-Optionally you can install project as a package with [setup.py](setup.py):
-```yaml
-pip install -e .
-```
-So you can easily import any file into any other file like so:
-```python
-from project.src.datasets.img_test_dataset import TestDataset
-from project.src.models.mnist_model import LitModelMNIST
-from project.src.datamodules.mnist_datamodule import MNISTDataModule
 ```

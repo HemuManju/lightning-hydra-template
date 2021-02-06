@@ -40,7 +40,8 @@ def print_module_init_info(model, datamodule, callbacks, loggers, trainer):
     log.info(message)
 
 
-def make_wandb_watch_model(loggers: List[pl.loggers.LightningLoggerBase], model: pl.LightningModule):
+def make_wandb_watch_model(loggers: List[pl.loggers.LightningLoggerBase],
+                           model: pl.LightningModule):
     for logger in loggers:
         if isinstance(logger, WandbLogger):
             if hasattr(model, 'architecture'):
@@ -49,7 +50,8 @@ def make_wandb_watch_model(loggers: List[pl.loggers.LightningLoggerBase], model:
                 logger.watch(model)
 
 
-def send_hparams_to_loggers(loggers: List[pl.loggers.LightningLoggerBase], hparams: dict):
+def send_hparams_to_loggers(loggers: List[pl.loggers.LightningLoggerBase],
+                            hparams: dict):
     for logger in loggers:
         logger.log_hyperparams(hparams)
 
@@ -62,7 +64,8 @@ def log_hparams(config, model, datamodule, callbacks, loggers, trainer):
 
     if hasattr(model, "architecture"):
         obj = model.architecture
-        hparams["_class_model_architecture"] = obj.__module__ + "." + obj.__class__.__name__
+        hparams[
+            "_class_model_architecture"] = obj.__module__ + "." + obj.__class__.__name__
 
     hparams.update(config["seeds"])
     hparams.update(config["model"])

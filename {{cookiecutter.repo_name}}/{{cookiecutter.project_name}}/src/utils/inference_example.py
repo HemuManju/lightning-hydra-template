@@ -18,14 +18,16 @@ def predict():
     CKPT_PATH = "epoch=0.ckpt"
 
     # load model from checkpoint
-    trained_model = LitModelMNIST.load_from_checkpoint(checkpoint_path=CKPT_PATH)
+    trained_model = LitModelMNIST.load_from_checkpoint(
+        checkpoint_path=CKPT_PATH)
 
     # switch to evaluation mode
     trained_model.eval()
     trained_model.freeze()
 
     # load data
-    img = Image.open("data/example_img.png").convert("L")  # for monochromatic conversion
+    img = Image.open("data/example_img.png").convert(
+        "L")  # for monochromatic conversion
     # img = Image.open("data/example_img.png").convert("RGB")  # for RGB conversion
 
     # preprocess
