@@ -13,7 +13,6 @@ class LitModelMNIST(pl.LightningModule):
     To learn how to create lightning models visit:
         https://pytorch-lightning.readthedocs.io/en/latest/lightning_module.html
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.save_hyperparameters()
@@ -55,7 +54,12 @@ class LitModelMNIST(pl.LightningModule):
         self.log('val_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
 
         # we can return here anything and then read it in some callback
-        return {"batch_val_loss": loss, "batch_val_acc": acc, "batch_val_preds": preds, "batch_val_y": y}
+        return {
+            "batch_val_loss": loss,
+            "batch_val_acc": acc,
+            "batch_val_preds": preds,
+            "batch_val_y": y
+        }
 
     # logic for a single testing step
     def test_step(self, batch, batch_idx):
@@ -72,4 +76,6 @@ class LitModelMNIST(pl.LightningModule):
         return loss
 
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
+        return torch.optim.Adam(self.parameters(),
+                                lr=self.hparams.lr,
+                                weight_decay=self.hparams.weight_decay)
