@@ -9,13 +9,15 @@ class TestDataset(Dataset):
     Can be used to perform inference with trained MNIST model.
     'Dataset' type classes can also be used to create 'DataLoader' type classes which are used by datamodules.
     """
-
     def __init__(self, img_dir, transform):
         self.transform = transform
-        self.images = [os.path.join(img_dir, fname) for fname in os.listdir(img_dir)]
+        self.images = [
+            os.path.join(img_dir, fname) for fname in os.listdir(img_dir)
+        ]
 
     def __getitem__(self, idx):
-        image = Image.open(self.images[idx]).convert("L")  # convert to black and white
+        image = Image.open(self.images[idx]).convert(
+            "L")  # convert to black and white
         # image = Image.open(self.images[idx]).convert("RGB")
 
         if self.transform is not None:
